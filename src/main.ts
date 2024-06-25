@@ -9,10 +9,12 @@ import 'primevue/resources/primevue.min.css';                 // Core CSS
 import 'primeicons/primeicons.css';  
 import ToastService from "primevue/toastservice"
 import { setComponent } from './modules/component.module';
+import { setPrimeVueComponents } from './modules/component.primevue';
 
 const app = createApp(App);
 app.use(router)
 app.use(PrimeVue)
 app.use(ToastService)
 setComponent(app)
+setPrimeVueComponents(app)
 app.mount('#app')
