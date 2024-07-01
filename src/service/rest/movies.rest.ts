@@ -2,11 +2,11 @@ import { Observable } from "rxjs";
 import api from "../rxjs";
 
 export class MoviesRest {
-    getMoviesById(id: string): Observable<string>{
-        const url = `/movie/${id}`;
+    getMoviesById(id: number, mediaType: string): Observable<string>{
+        const url = `/${mediaType}/${id}`;
         return api.get(url)
     }
-    getMovies(): Observable<string>{
+    getAllMovies(): Observable<string>{
         const url = `/discover/movie/`;
         return api.get(url)
     }
