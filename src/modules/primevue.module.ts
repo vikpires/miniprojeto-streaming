@@ -6,6 +6,7 @@ import Toolbar from "primevue/toolbar";
 import Menu from "primevue/menu";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import Sidebar from "primevue/sidebar";
 
 //import useToast from "primevue/usetoast" const toast = useToast()
 
@@ -22,5 +23,6 @@ export function setPrimeVueComponents(app:App){
     app.component('menu-on', Menu)
     app.component('data-table',DataTable)
     app.component('column-app', Column)
+    app.component('side-bar', Sidebar)
 
 }
