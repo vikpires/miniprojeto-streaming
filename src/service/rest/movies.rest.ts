@@ -7,7 +7,7 @@ export class MoviesRest {
         return api.get(url)
     }
     getMovies(): Observable<string>{
-        const url = `/discover/movie/`;
+        const url = `/movie/popular`;
         return api.get(url)
     }
 }
