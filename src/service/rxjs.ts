@@ -7,8 +7,7 @@ const get = <T>(
     params?: object,
     baseURL?: string,
     responseType: ResponseType = "json",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    token?: any
+    token?: string
   ): Observable<T> => {
     return defer(() =>
       api(baseURL, token).get<T>(url, { params, responseType })
@@ -20,9 +19,10 @@ const get = <T>(
     url: string,
     body: object,
     params?: object,
-    baseURL?: string
+    baseURL?: string,
+    token?: string
   ): Observable<T | void> => {
-    return defer(() => api(baseURL).post<T>(url, body, { params})).pipe(
+    return defer(() => api(baseURL, token).post<T>(url, body, { params})).pipe(
         map((result) => result.data)
     );
   };
@@ -32,8 +32,9 @@ const get = <T>(
     body: object,
     params?: object,
     baseURL?: string,    
+    token?: string
   ): Observable<T | void> => {
-    return defer(()=> api(baseURL).put<T>(url, body, { params })).pipe(
+    return defer(()=> api(baseURL, token).put<T>(url, body, { params })).pipe(
         map((result) => result.data)
     );
   };
@@ -42,18 +43,21 @@ const get = <T>(
     url: string,
     body: object,
     params?: object,
-    baseURL?: string
+    baseURL?: string,
+    token?: string
   ): Observable<T | void> => {
-    return defer(() => api(baseURL).patch<T>(url, body, { params})).pipe(
+    return defer(() => api(baseURL, token).patch<T>(url, body, { params})).pipe(
         map((result) => result.data)
     );
   };
 
   const deleteR = <T> (
     url: string,
-    baseURL?: string
+    params?: object,
+    baseURL?: string,
+    token?: string
   ): Observable<T | void> => {
-    return defer(() => api(baseURL).delete(`${url}`)).pipe(
+    return defer(() => api(baseURL, token).delete(url, { params })).pipe(
         map((result) => result.data)
     );
   };
