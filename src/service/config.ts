@@ -6,15 +6,12 @@ function apiConfig(baseURL: string): AxiosRequestConfig{
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function initAxios(config: AxiosRequestConfig, token?: any): AxiosInstance {
+function initAxios(config: AxiosRequestConfig, token?: string): AxiosInstance {
     const defineInstance = axios.create(config);
     
     // Interceptores de requisição
     defineInstance.interceptors.request.use(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (request: any) => {
-            console.log(request)
+        (request) => {
             request.headers.Authorization = token??`Bearer ${process.env.VUE_APP_TOKEN}`
             return request;
         },
@@ -31,7 +28,7 @@ function initAxios(config: AxiosRequestConfig, token?: any): AxiosInstance {
     );
     return defineInstance;    
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function api(baseURL="/api", token?: any){
+
+export default function api(baseURL="/api", token?:string){
     return initAxios(apiConfig(baseURL), token);
 }

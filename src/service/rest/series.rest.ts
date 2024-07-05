@@ -1,13 +1,14 @@
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import api from "../rxjs";
+import { SeriesModel } from "@/model/series.model";
 
 export class SeriesRest {
-    getSeriesById(id: string): Observable<string>{
+    getMoviesById(id: string): Observable<SeriesModel>{
         const url = `/tv/${id}`;
-        return api.get(url)
+        return api.get<SeriesModel>(url);
     }
-    getSeries(): Observable<string>{
+    getMovies(): Observable<SeriesModel[]>{
         const url = `/discover/tv`;
-        return api.get(url)
+        return api.get<{ results: SeriesModel[] }>(url).pipe(map(response => response.results));
     }
 }
