@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Barra de navegação fixa -->
     <div class="fixed top-0 w-full z-50">
       <tool-bar class="bg-gray-800 text-white flex justify-between items-center p-4 shadow-lg rounded-none">
         <template #start>
@@ -21,7 +20,7 @@
           </div>
         </template>
         <template #end>
-          <div class="hidden md:flex items-center space-x-4"> <!--hidden md:flex faz o conteudo ser oculto em telas menores que médias ou maiores-->
+          <div class="hidden md:flex items-center space-x-4"> 
             <template v-for="route in endRoutes" :key="route.path">
               <button-on
                 :class="{'font-bold': isActive(route.path)}"
@@ -32,9 +31,8 @@
             </template>
           </div>
  
-          <!-- ícone do menu lateral para telas menores -->
-          <div class="md:hidden relative"><!--visível apenas para telas pequenas, md:hidden deixa oculto para telas medias ou maiores-->
-            <button-on @click="toggleSideBar" class="focus:outline-none"> <!--quando há o clique no toggle, ele se torna verdadeiro e aparece o pi-times-->
+          <div class="md:hidden relative">
+            <button-on @click="toggleSideBar" class="focus:outline-none"> 
               <i :class="['pi', sidebarVisible ? 'pi-times' : 'pi-bars']" class="text-lg"></i>
             </button-on>
           </div>
@@ -42,10 +40,8 @@
       </tool-bar>
     </div>
  
-    <!-- espaço de margem para o conteúdo principal -->
       <div class="mt-14"></div>
  
-    <!-- Sidebar -->
     <div v-if="sidebarVisible" class="fixed top-0 right-0 z-50 flex flex-col bg-gray-800 text-white w-44 max-h-screen overflow-y-auto p-5">
       <div class="flex justify-end">
         <button @click="toggleSideBar" class="focus:outline-none">
@@ -97,13 +93,12 @@ export default {
     },
     toggleSideBar() {
       this.sidebarVisible = !this.sidebarVisible;
-      // ajuste do margin-left do conteúdo principal quando a sidebar é aberta ou fechada
       const mainContent = document.querySelector('.main-content');
       if (mainContent) {
         mainContent.style.marginLeft = this.sidebarVisible ? '52px' : '0';
       }
     },
-    isActive(path){ //verifica se a rota está ativa para deixar a label bold
+    isActive(path){ 
       return this.$route.path === path;
     }
   }
