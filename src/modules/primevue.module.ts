@@ -8,6 +8,7 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Sidebar from "primevue/sidebar";
 import Paginator from "primevue/paginator";
+import ProgressSpinner from "primevue/progressspinner";
 
 //import useToast from "primevue/usetoast" const toast = useToast()
 
@@ -25,5 +26,6 @@ export function setPrimeVueComponents(app:App){
     app.component('data-table',DataTable)
     app.component('column-app', Column)
     app.component('side-bar', Sidebar)
+    app.component('progress-spinner', ProgressSpinner)
 
 }

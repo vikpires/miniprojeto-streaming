@@ -13,6 +13,7 @@ export class SeriesModel {
         public first_air_date?: Date,
         public name?: string,
         public vote_average?: number,
-        public vote_acount?: number
+        public vote_acount?: number,
+        public number_of_seasons?: number
     ){ }
 } 

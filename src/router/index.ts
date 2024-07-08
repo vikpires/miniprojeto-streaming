@@ -3,6 +3,7 @@ import HomeView from '../views/Home/HomeView.vue'
 import FavoriteView from '@/views/Favorite/FavoriteView.vue'
 import MoviesView from '@/views/Movies/MoviesView.vue'
 import SeriesView from '@/views/Series/SeriesView.vue'
+import SeriesDetailView from '@/views/Series/SeriesDetailView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +25,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/series',
     name: 'series',
     component: SeriesView
+  },
+  {
+    path: '/series/:id',
+    name: 'series-details',
+    component: SeriesDetailView
   }
 ]
 
