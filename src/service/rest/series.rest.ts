@@ -1,14 +1,19 @@
-import { Observable, map } from "rxjs";
+import { Observable } from "rxjs";
 import api from "../rxjs";
 import { SeriesModel } from "@/model/series.model";
+import { PagesModel } from "@/model/pages.model";
+
+export interface SeriesResponse extends PagesModel {
+    results: SeriesModel[];
+}
 
 export class SeriesRest {
-    getMoviesById(id: string): Observable<SeriesModel>{
+    getSeriesById(id: string): Observable<SeriesModel>{
         const url = `/tv/${id}`;
         return api.get<SeriesModel>(url);
     }
-    getMovies(): Observable<SeriesModel[]>{
+    getSeries(): Observable<SeriesResponse> {
         const url = `/discover/tv`;
-        return api.get<{ results: SeriesModel[] }>(url).pipe(map(response => response.results));
+        return api.get<SeriesResponse>(url);
     }
 }
