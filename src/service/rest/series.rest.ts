@@ -1,14 +1,14 @@
-import { Observable, map } from "rxjs";
+/* eslint-disable */
+import { Observable } from "rxjs";
 import api from "../rxjs";
-import { SeriesModel } from "@/model/series.model";
 
 export class SeriesRest {
-    getMoviesById(id: string): Observable<SeriesModel>{
+    getSeriesById(id: string): Observable<any> {
         const url = `/tv/${id}`;
-        return api.get<SeriesModel>(url);
+        return api.get(url);
     }
-    getMovies(): Observable<SeriesModel[]>{
-        const url = `/discover/tv`;
-        return api.get<{ results: SeriesModel[] }>(url).pipe(map(response => response.results));
+    getSeries(page: number = 1): Observable<any> {
+        const url = `/discover/tv?page=${page}`;
+        return api.get(url);
     }
 }
