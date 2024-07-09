@@ -11,7 +11,7 @@
         @page="onPageChange"
         :pt="{ 
           root: {
-            class:['bg-gray-800','text-sm md:text-base','rounded-none', 'text-slate-300', 'py-1 lg:py-0']
+            class:['bg-gray-800','text-sm md:text-base','rounded-none', 'text-slate-300', 'py-1 lg:py-0', 'sd: p-1']
           },
           current: ['text-slate-300'],
           firstpagebutton: ['hover:bg-gray-700'], previouspagebutton: ['hover:bg-gray-700'], nextpagebutton: ['hover:bg-gray-700'], lastpagebutton: ['hover:bg-gray-700']
@@ -45,7 +45,7 @@ export default defineComponent({
   methods: {
     onPageChange(event: PageState): void {
       this.$emit('page-change', event.page + 1); 
-      this.$router.push({name: 'series', query: {page: event.page + 1}})
+      this.$router.push({name: this.$route.name, query: {page: event.page + 1}})
     }
   }
 });
