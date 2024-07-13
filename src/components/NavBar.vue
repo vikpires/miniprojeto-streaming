@@ -40,8 +40,6 @@
       </tool-bar>
     </div>
  
-      <div class="mt-14"></div>
- 
     <div v-if="sidebarVisible" class="fixed top-0 right-0 z-50 flex flex-col bg-gray-800 text-white w-44 max-h-screen overflow-y-auto p-5">
       <div class="flex justify-end">
         <button @click="toggleSideBar" class="focus:outline-none">
