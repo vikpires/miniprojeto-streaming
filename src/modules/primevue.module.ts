@@ -7,6 +7,7 @@ import Menu from "primevue/menu";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Sidebar from "primevue/sidebar";
+import Paginator from "primevue/paginator";
 
 //import useToast from "primevue/usetoast" const toast = useToast()
 
@@ -14,7 +15,7 @@ import Sidebar from "primevue/sidebar";
 import {App} from "vue";
 
 export function setPrimeVueComponents(app:App){
-
+    app.component('paginator-on', Paginator)
     app.component('button-on', Button)
     app.component('input-text', InputText)
     app.component('toast-on', Toast)
