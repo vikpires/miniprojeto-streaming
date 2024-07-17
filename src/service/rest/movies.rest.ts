@@ -1,14 +1,16 @@
-import { Observable, map } from "rxjs";
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Observable } from "rxjs";
 import api from "../rxjs";
-import { MoviesModel } from "@/model/movies.model";
 
 export class MoviesRest {
-    getMoviesById(id: string): Observable<MoviesModel>{
+    getMoviesById(id: string): Observable<any>{
         const url = `/movie/${id}`;
-        return api.get<MoviesModel>(url);
+        return api.get(url);
     }
-    getMovies(): Observable<MoviesModel[]>{
-        const url = `/movie/popular`;
-        return api.get<{ results: MoviesModel[] }>(url).pipe(map(response => response.results));
+    getMovies(page: number = 1): Observable<any>{
+        const url = `/movie/popular?page=${page}`;
+        return api.get(url);
     }
 }
