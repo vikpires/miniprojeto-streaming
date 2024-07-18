@@ -4,6 +4,7 @@ import FavoriteView from '@/views/Favorite/FavoriteView.vue'
 import MoviesView from '@/views/Movies/MoviesView.vue'
 import SeriesView from '@/views/Series/SeriesView.vue'
 import SeriesDetailView from '@/views/Series/SeriesDetailView.vue'
+import MoviesDetailView from '@/views/Movies/MoviesDetailView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/series/:id',
     name: 'series-details',
     component: SeriesDetailView
+  },
+  {
+    path: '/movies/:id',
+    name: 'movie-details',
+    component: MoviesDetailView
   }
 ]
 

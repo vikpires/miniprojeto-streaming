@@ -12,6 +12,7 @@ export class MoviesModel {
         public release_date?: Date,
         public title?: string,
         public vote_average?: number,
-        public vote_acount?: number
+        public vote_acount?: number,
+        public runtime?: number
     ){ }
 }
