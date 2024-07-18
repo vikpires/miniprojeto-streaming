@@ -1,12 +1,12 @@
 <template>
      <div v-if="loading"
             class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 z-50">
-            <progress-spinner strokeWidth="4" animationDuration="2.5s" />
+            <progress-spinner strokeWidth="4" animationDuration="1.5s" />
         </div>
     <section v-else class="relative h-screen overflow-hidden bg-fixed bg-cover">
+        <div class="absolute top-0 left-0 h-full w-7/12 md:w-3/4 bg-gradient-to-r from-black to-transparent z-10"></div>
         <img  :src="backgroundImage" :alt="series.original_name"
             class="absolute top-0 w-full h-full object-cover filter brightness-50" />
-        
         <div class="bg-opacity-80 flex top-48 md:top-72 lg:top-64 xl:top-52 z-30 relative items-center p-10">
             <card-on class="w-full sm:w-5/6 md:w-4/6 lg:w-2/5 p-4 rounded-lg shadow-lg bg-black bg-opacity-50">
                 <template #title>
