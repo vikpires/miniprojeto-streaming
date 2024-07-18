@@ -1,38 +1,65 @@
 <template>  
-      <section class="w-full justify-between">
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          <movies-card v-for="movie in moviesList" :key="movie.id" :movie="movie"/>
-        </div>
-      </section>
+  <section class="w-full justify-between">
+    <div class="p-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-1 lg:gap-3">
+      <movies-card v-for="movie in homeList" :key="movie.id" :movie="movie"/>
+      <series-card v-for="series in homeList" :key="series.id" :series="series" />
+    </div>
+    <div class="pt-14 md:pt-10"></div>
+<paginator-pages :totalRecords="totalResults" :currentPage="page" :maxPages="maxPages"
+  @page-change="handlePageChange"/>
+  </section>
 </template>
 
 <script lang="ts">
+
 import { defineComponent } from 'vue';
+import { HomeService } from './home.service';
+import { SeriesModel } from '@/model/series.model';
 import { MoviesModel } from '@/model/movies.model';
-import { HomeService } from '@/views/Home/homeService';
 
 export default defineComponent({
-  data(){
-    return{
-      moviesList: [] as MoviesModel[],
-  }
+data() {
+return {
+  homeList: [] as MoviesModel[] | SeriesModel[],
+  page: 1,
+  totalResults: 0,
+  totalPages: 0,
+  maxPages: 500,
+  maxResults: 10000
+}
 },
-  methods:{
-    getAllData(){
-      this.homeService.allMovies.subscribe({next:(response: MoviesModel[])=>{
-        this.moviesList=response;
-      }
-      });
-      this.homeService.getMovies();
-    },  
-  },
-  computed:{
-    homeService(){
-      return new HomeService()
+methods: {
+  getAllMedia(page = 1) {
+  this.HomeService.allMedia.subscribe({
+    next: (response) => {
+      this.homeList = response.results;
+      this.page = response.page;
+      this.totalResults = this.totalResultsResponse(response.total_results)
+      this.totalPages = this.totalPagesResponse(response.total_pages)
     }
-  },
-  mounted() {
-    this.getAllData();
-  },
+  });
+  this.HomeService.getAllMedia(page);
+},
+handlePageChange(newPage: number) {
+  this.getAllMedia(newPage);
+},
+totalResultsResponse(total: number): number {
+  return total > this.maxResults ? this.maxResults : total;
+},
+totalPagesResponse(totalPages: number): number {
+  return totalPages <= this.maxPages ? totalPages : this.maxPages;
+}
+},
+computed: {
+HomeService() {
+  return new HomeService();
+},
+totalRecords(): number {
+  return this.totalResults;
+}
+},
+mounted() {
+this.getAllMedia()
+}
 });
 </script>
