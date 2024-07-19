@@ -1,11 +1,11 @@
 <template>
-     <div v-if="loading"
-            class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 z-50">
-            <progress-spinner strokeWidth="4" animationDuration="1.5s" />
-        </div>
+    <div v-if="loading"
+        class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60 z-50">
+        <progress-spinner strokeWidth="4" animationDuration="1.5s" />
+    </div>
     <section v-else class="relative h-screen overflow-hidden bg-fixed bg-cover">
         <div class="absolute top-0 left-0 h-full w-7/12 md:w-3/4 bg-gradient-to-r from-black to-transparent z-10"></div>
-        <img  :src="backgroundImage" :alt="series.original_name"
+        <img :src="backgroundImage" :alt="series.original_name"
             class="absolute top-0 w-full h-full object-cover filter brightness-50" />
         <div class="bg-opacity-80 flex top-48 md:top-72 lg:top-64 xl:top-52 z-30 relative items-center p-10">
             <card-on class="w-full sm:w-5/6 md:w-4/6 lg:w-2/5 p-4 rounded-lg shadow-lg bg-black bg-opacity-50">
@@ -30,8 +30,8 @@
                 </template>
                 <template #footer>
                     <div class="flex justify-center">
-                        <button-on @click="checkFavorite" :label="favoriteLabel" :icon="favoriteIcon" :class="{
-                            'rounded-lg font-bold py-2': true,
+                        <button-on @click="toggleFavorite" :label="favoriteLabel" :icon="favoriteIcon" :class="{
+                            'rounded-lg font-bold py-2 justify-center': true,
                             'border-2': true,
                             'hover:bg-white hover:text-black': true,
                             'border-white text-white px-5 pr-6': !isFavorite,
@@ -49,6 +49,7 @@ import { defineComponent } from 'vue';
 import { SerieService } from './serie.service';
 import { SeriesModel } from '../../model/series.model';
 import { AdjustScreen } from '@/utils/adjustScreen.utils';
+import { SaveFavorites } from '@/utils/saveFavorites.util';
 
 export default defineComponent({
     data() {
@@ -66,20 +67,29 @@ export default defineComponent({
                     this.series = response;
                     this.scrollScreenToTop();
                     this.loading = false;
+                    this.checkIfFavorite();
                 },
-                
             });
-           
+
             this.serviceSeriesDetail.getSeriesById(id)
         },
-        checkFavorite() {
+        checkIfFavorite() {
+            const allFavorites = this.saveFavorites.favorites;
+            this.isFavorite = allFavorites.series.some((serie) => serie.id === this.series.id);
+        },
+        toggleFavorite() {
             this.isFavorite = !this.isFavorite;
+            if (this.isFavorite) {
+                this.saveFavorites.addFavorite(this.series);
+            } else if (typeof this.series.id === 'number') {
+                this.saveFavorites.removeFavorite(this.series.id);
+            }
         }
     },
     mounted() {
         const seriesId = String(this.$route.params.id);
         this.fetchSeriesDetail(seriesId);
-       
+
     },
     computed: {
         backgroundImage(): string {
@@ -98,6 +108,9 @@ export default defineComponent({
         },
         serviceSeriesDetail(): SerieService {
             return new SerieService()
+        },
+        saveFavorites() {
+            return new SaveFavorites();
         }
     }
 });

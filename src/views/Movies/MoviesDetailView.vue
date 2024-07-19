@@ -30,8 +30,8 @@
                </template>
                <template #footer>
                    <div class="flex justify-center">
-                       <button-on @click="checkFavorite" :label="favoriteLabel" :icon="favoriteIcon" :class="{
-                           'rounded-lg font-bold py-2': true,
+                       <button-on @click="toggleFavorite" :label="favoriteLabel" :icon="favoriteIcon" :class="{
+                           'rounded-lg font-bold py-2 justify-center': true,
                            'border-2': true,
                            'hover:bg-white hover:text-black': true,
                            'border-white text-white px-5 pr-6': !isFavorite,
@@ -49,6 +49,7 @@ import { defineComponent } from 'vue';
 import { MovieService} from './movie.service';
 import { MoviesModel } from '../../model/movies.model';
 import { AdjustScreen } from '@/utils/adjustScreen.utils';
+import { SaveFavorites } from '@/utils/saveFavorites.util';
 
 export default defineComponent({
    data() {
@@ -66,14 +67,24 @@ export default defineComponent({
                    this.movie = response;
                    this.scrollScreenToTop();
                    this.loading = false;
+                   this.checkIfFavorite();
                },
            });
 
            this.serviceMoviesDetail.getMoviesById(id)
        },
-       checkFavorite() {
-           this.isFavorite = !this.isFavorite;
-       }
+        checkIfFavorite() {
+            const allFavorites = this.saveFavorites.favorites;
+            this.isFavorite = allFavorites.movies.some((movie) => movie.id === this.movie.id);
+        },
+       toggleFavorite() {
+            this.isFavorite = !this.isFavorite;
+            if (this.isFavorite) {
+                this.saveFavorites.addFavorite(this.movie);
+            } else if (typeof this.movie.id === 'number') {
+                this.saveFavorites.removeFavorite(this.movie.id);
+            }            
+        },
    },
    mounted() {
        const movieId = String(this.$route.params.id);
@@ -96,7 +107,10 @@ export default defineComponent({
        },
        serviceMoviesDetail(): MovieService {
            return new MovieService()
-       }
+       },
+        saveFavorites() {
+            return new SaveFavorites();
+        }
    }
 });
 </script>
