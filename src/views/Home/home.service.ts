@@ -1,13 +1,13 @@
 /* eslint-disable */
 import { HomeRest } from "@/service/rest/home.rest";
-import { BehaviorSubject, Observable, take } from "rxjs";
+import { Subject, Observable, take } from "rxjs";
 
 export class HomeService{
     constructor(
         private _allMedia = new HomeRest()
 ){}
 
-    private allMedia$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+    private allMedia$: Subject<any> = new Subject<any>();
     allMedia: Observable<any> = this.allMedia$.asObservable();
     
     getAllMedia(page: number = 1): void{

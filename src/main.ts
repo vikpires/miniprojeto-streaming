@@ -9,6 +9,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';       // Theme
 import 'primevue/resources/primevue.min.css';                 // Core CSS
 import 'primeicons/primeicons.css';  
 import ToastService from "primevue/toastservice"
+import ConfirmationService from 'primevue/confirmationservice';
 import { setComponents } from './modules/component.module';
 import { setPrimeVueComponents } from './modules/primevue.module';
 
@@ -16,6 +17,9 @@ const app = createApp(App);
 app.use(router)
 app.use(PrimeVue)
 app.use(ToastService)
+app.use(ConfirmationService)
 setComponents(app)
 setPrimeVueComponents(app)
 app.mount('#app')
+
+export default app;

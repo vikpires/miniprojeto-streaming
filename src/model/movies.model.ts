@@ -13,6 +13,15 @@ export class MoviesModel {
         public title?: string,
         public vote_average?: number,
         public vote_acount?: number,
-        public runtime?: number
+        public runtime?: number,
+        public videos?:{
+            results:Array<{
+                id: string;
+                key: string;
+                name: string;
+                site: string;
+                type: string;
+            }>
+        }
     ){ }
 }
