@@ -19,3 +19,5 @@ app.use(ToastService)
 setComponents(app)
 setPrimeVueComponents(app)
 app.mount('#app')
+
+export default app;
