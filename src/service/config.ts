@@ -1,4 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import { ToastsMessages } from "@/utils/toast.utils";
+import { ToastMessageOptions } from "primevue/toast";
+import app from "../main"
 
 function apiConfig(baseURL: string): AxiosRequestConfig{
     return {
@@ -15,14 +18,17 @@ function initAxios(config: AxiosRequestConfig, token?: string): AxiosInstance {
             request.headers.Authorization = token??`Bearer ${process.env.VUE_APP_TOKEN}`
             return request;
         },
-        (error) => Promise.reject(error)
+        (error) => {
+            app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions)
+            return Promise.reject(error)
+        }
     );
 
     // Interceptores de resposta
     defineInstance.interceptors.response.use (
         (response) => response, 
         (error: AxiosError) => {
-            alert(error);
+            app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions)
             return Promise.reject(error);
         }
     );

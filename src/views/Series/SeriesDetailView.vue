@@ -50,6 +50,7 @@ import { SerieService } from './serie.service';
 import { SeriesModel } from '../../model/series.model';
 import { AdjustScreen } from '@/utils/adjustScreen.utils';
 import { SaveFavorites } from '@/utils/saveFavorites.util';
+import { ToastsMessages } from '@/utils/toast.utils';
 
 export default defineComponent({
     data() {
@@ -79,11 +80,16 @@ export default defineComponent({
         },
         toggleFavorite() {
             this.isFavorite = !this.isFavorite;
+            const nameSerie = this.series.name;
+            const action = this.isFavorite ? 'adicionado aos' : 'removido dos';
+
             if (this.isFavorite) {
                 this.saveFavorites.addFavorite(this.series);
             } else if (typeof this.series.id === 'number') {
                 this.saveFavorites.removeFavorite(this.series.id);
             }
+
+            ToastsMessages.showSuccessToast(`${nameSerie} foi ${action} favoritos.`, this.favoriteSummary, this);
         }
     },
     mounted() {
@@ -111,6 +117,9 @@ export default defineComponent({
         },
         saveFavorites() {
             return new SaveFavorites();
+        },
+        favoriteSummary(): string {
+           return this.isFavorite ? 'Favoritado!' : 'Desfavoritado!';
         }
     }
 });
