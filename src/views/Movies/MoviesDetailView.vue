@@ -7,7 +7,19 @@
         <div class="absolute top-0 left-0 h-full w-7/12 md:w-3/4 bg-gradient-to-r from-black to-transparent z-10"></div>
         <img :src="backgroundImage" :alt="movie.original_title"
             class="absolute top-0 w-full h-full object-cover filter brightness-50" />
-        <div class="bg-opacity-80 flex top-48 md:top-72 lg:top-64 xl:top-52 z-30 relative items-center p-10">
+        <div
+            class="bg-opacity-80 flex top-24 md:top-64 xl:top-52 z-30 relative items-center p-10 flex-col lg:flex-row-reverse gap-8 md:flex md:gap-12 lg:gap-0 justify-center lg:justify-between">
+            <section v-if="trailerUrl" class="lg:w-1/4 lg:mr-20 md:w-3/5">
+                <div class="flex justify-center items-center">
+                    <iframe :src="trailerUrl" frameborder="0" allowfullscreen
+                        class="h-56 md:w-full md:h-72 lg:h-80"></iframe>
+                </div>
+            </section>
+            <div v-else :class="{ 'hidden': !isNotFoundVideoLoaded }"
+                class="flex justify-center items-center w-full lg:w-1/4 lg:mr-20 md:w-3/5">
+                <img :src="backgroundImage" alt="Video Not Found" @load="onNotFoundVideoLoad"
+                    class="rounded-xl w-48 h-48 md:h-72 object-cover opacity-75 md:w-96" />
+            </div>
             <card-on class="w-full sm:w-5/6 md:w-4/6 lg:w-2/5 p-4 rounded-lg shadow-lg bg-black bg-opacity-50">
                 <template #title>
                     <h3 v-if="movie.original_title" class="text-2xl text-white font-bold tracking-wider mb-1">
@@ -58,7 +70,9 @@ export default defineComponent({
             movie: {} as MoviesModel,
             id: this.$route.params.id,
             loading: true,
-            isFavorite: false
+            isFavorite: false,
+            trailerUrl: '' as string | null,
+            isNotFoundVideoLoaded: false,
         };
     },
     methods: {
@@ -69,6 +83,7 @@ export default defineComponent({
                     this.scrollScreenToTop();
                     this.loading = false;
                     this.checkIfFavorite();
+                    this.setTrailerUrl();
                 },
             });
 
@@ -91,6 +106,17 @@ export default defineComponent({
             }
             ToastsMessages.showSuccessToast(`${nameMovie} foi ${action} favoritos.`, this.favoriteSummary, this);
         },
+        setTrailerUrl() {
+            if (this.movie.videos && this.movie.videos.results) {
+                const trailer = this.movie.videos.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+                if (trailer) {
+                    this.trailerUrl = `https://www.youtube.com/embed/${trailer.key}?controls=0`;
+                }
+            }
+        },
+        onNotFoundVideoLoad() {
+            this.isNotFoundVideoLoaded = true;
+        }
     },
     mounted() {
         const movieId = String(this.$route.params.id);

@@ -14,6 +14,15 @@ export class SeriesModel {
         public name?: string,
         public vote_average?: number,
         public vote_acount?: number,
-        public number_of_seasons?: number
+        public number_of_seasons?: number,
+        public videos?:{
+            results:Array<{
+                id: string;
+                key: string;
+                name: string;
+                site: string;
+                type: string;
+            }>
+        }
     ){ }
 } 
