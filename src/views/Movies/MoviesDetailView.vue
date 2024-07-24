@@ -29,7 +29,8 @@
                     </div>
                 </template>
                 <template #footer>
-                    <div class="flex justify-center">
+                    <div class="flex justify-between gap-8 md:grid md:grid-cols-3">
+                        <button-on @click="navigateBack" label="Voltar" icon="pi pi-arrow-left" class="rounded-lg font-bold py-2 justify-center text-white px-8 pr-10 hover:bg-gray-700"/>
                         <button-on @click="toggleFavorite" :label="favoriteLabel" :icon="favoriteIcon" :class="{
                             'rounded-lg font-bold py-2 justify-center': true,
                             'border-2': true,
@@ -91,6 +92,9 @@ export default defineComponent({
             }
             ToastsMessages.showSuccessToast(`${nameMovie} foi ${action} favoritos.`, this.favoriteSummary, this);
         },
+        navigateBack() {
+            this.$router.go(-1);
+        }
     },
     mounted() {
         const movieId = String(this.$route.params.id);
