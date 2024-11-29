@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable */
 import { PageState } from 'primevue/paginator';
 import { defineComponent } from 'vue';
 
@@ -45,7 +44,7 @@ export default defineComponent({
   methods: {
     onPageChange(event: PageState): void {
       this.$emit('page-change', event.page + 1); 
-      this.$router.push({name: this.$route.name, query: {page: event.page + 1}})
+      this.$router.push({name: this.$route.name, query: { ...this.$route.query, page: event.page + 1 }});
     }
   }
 });

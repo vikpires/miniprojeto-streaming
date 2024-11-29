@@ -4,8 +4,8 @@
       <series-card v-for="series in seriesList" :key="series.id" :series="series" />
     </div>
     <div class="pt-14 md:pt-10"></div>
-    <paginator-pages :totalRecords="totalResults" :currentPage="page" :maxPages="maxPages"
-      @page-change="handlePageChange"/>
+    <paginator-pages :totalRecords="totalResults" :currentPage="currentPage" :maxPages="maxPages"
+      @page-change="handlePageChange" />
   </section>
 </template>
 
@@ -18,7 +18,6 @@ export default defineComponent({
   data() {
     return {
       seriesList: [] as SeriesModel[],
-      page: 1,
       totalResults: 0,
       totalPages: 0,
       maxPages: 500,
@@ -30,7 +29,6 @@ export default defineComponent({
       this.serieService.allSeries.subscribe({
         next: (response) => {
           this.seriesList = response.results;
-          this.page = response.page;
           this.totalResults = this.totalResultsResponse(response.total_results)
           this.totalPages = this.totalPagesResponse(response.total_pages)
         }
@@ -38,6 +36,7 @@ export default defineComponent({
       this.serieService.getSeries(page);
     },
     handlePageChange(newPage: number) {
+      this.$router.push({ query: { ...this.$route.query, page: newPage} })
       this.getSeries(newPage);
     },
     totalResultsResponse(total: number): number {
@@ -53,10 +52,18 @@ export default defineComponent({
     },
     totalRecords(): number {
       return this.totalResults;
+    },
+    currentPage(): number {
+      return Number(this.$route.query.page) || 1;
+    }
+  },
+  watch: {
+    '$route.query.page'() {
+      this.getSeries(this.currentPage)
     }
   },
   mounted() {
-    this.getSeries();
+    this.getSeries(this.currentPage);
   },
 });
 </script>
