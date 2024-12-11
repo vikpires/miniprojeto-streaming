@@ -68,33 +68,41 @@
   </div>
 </template>
  
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+interface Route {
+  label: string;
+  path: string;
+  icon: string;
+}
+
+export default defineComponent ({
   name: 'NavBar',
   data() {
     return {
       sidebarVisible: false,
       mainRoutes: [
-        { label: "Home", path: "/", icon: "pi pi-home" },
-        { label: "Séries", path: "/series", icon: "pi pi-list" },
-        { label: "Filmes", path: "/movies", icon: "pi pi-video" }
+        { label: "Home", path: "/", icon: "pi pi-home" } as Route,
+        { label: "Séries", path: "/series", icon: "pi pi-list" } as Route,
+        { label: "Filmes", path: "/movies", icon: "pi pi-video" } as Route
       ],
-      endRoutes: [
-        { label: "Favoritados", path: "/favs", icon: "pi pi-star" }
+      endRoutes: [ 
+        { label: "Favoritados", path: "/favs", icon: "pi pi-star" } as Route
       ]
     };
   },
   methods: {
-    navigateTo(route) {
+    navigateTo(route: string) {
       this.$router.push(route);
       this.sidebarVisible = false;
     },
     toggleSideBar() {
       this.sidebarVisible = !this.sidebarVisible;
     },
-    isActive(path){ 
+    isActive(path: string){ 
       return this.$route.path === path;
     }
   }
-};
+});
 </script>
