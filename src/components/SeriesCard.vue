@@ -29,7 +29,6 @@ import { defineComponent, PropType } from 'vue';
 import { SeriesModel } from '@/model/series.model';
 import { SaveFavorites } from '@/utils/saveFavorites.util';
 
-
 export default defineComponent({
     name: 'SeriesCard',
     data() {
@@ -53,20 +52,20 @@ export default defineComponent({
 
     },
     methods: {
-        navigateToDetail() {
+        navigateToDetail(): void {
             this.$router.push({ path: `/series/${this.series.id}` });
         },
-        onNotFoundImageLoad() {
+        onNotFoundImageLoad(): void {
             this.isNotFoundImageLoaded = true;
         },
-        handleButtonClick(){
+        handleButtonClick(): void {
             this.isClicked = true;
             this.removeFavorite();
             setTimeout(() =>{
                 this.isClicked = false;
             }, 300)
         },
-        removeFavorite(){
+        removeFavorite(): void {
             if(this.series.id){
                 this.saveFavorites.removeFavorite(this.series.id);
                 this.$emit('favorite-removed', this.series.id);

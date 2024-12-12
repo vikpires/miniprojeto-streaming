@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/Home/HomeView.vue'
+import HomeView from '@/views/Home/HomeView.vue'
 import FavoriteView from '@/views/Favorite/FavoriteView.vue'
 import MoviesView from '@/views/Movies/MoviesView.vue'
 import SeriesView from '@/views/Series/SeriesView.vue'
@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 

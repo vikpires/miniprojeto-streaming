@@ -1,40 +1,52 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { ToastsMessages } from "@/utils/toast.utils";
 import { ToastMessageOptions } from "primevue/toast";
-import app from "../main"
+import app from "../main";
 
-function apiConfig(baseURL: string): AxiosRequestConfig{
+function apiConfig(config: { baseURL?: string; } = {}): AxiosRequestConfig {
+    const baseURL = config.baseURL || process.env.VUE_APP_BASE_URL;
+
     return {
-        baseURL: baseURL,
+        baseURL: baseURL || "/api",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
     };
 }
 
 function initAxios(config: AxiosRequestConfig, token?: string): AxiosInstance {
     const defineInstance = axios.create(config);
-    
+
     // Interceptores de requisição
     defineInstance.interceptors.request.use(
         (request) => {
-            request.headers.Authorization = token??`Bearer ${process.env.VUE_APP_TOKEN}`
+            const bearerToken = process.env.VUE_APP_TOKEN || "";
+            request.headers.Authorization = token ?? `Bearer ${bearerToken}`;
             return request;
         },
         (error) => {
-            app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions)
-            return Promise.reject(error)
+            if (app?.config?.globalProperties?.$toast) {
+                app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions);
+            }
+            return Promise.reject(error);
         }
     );
 
     // Interceptores de resposta
-    defineInstance.interceptors.response.use (
-        (response) => response, 
+    defineInstance.interceptors.response.use(
+        (response) => response,
         (error: AxiosError) => {
-            app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions)
+            if (app?.config?.globalProperties?.$toast) {
+                app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions);
+            }
             return Promise.reject(error);
         }
     );
-    return defineInstance;    
+
+    return defineInstance;
 }
 
-export default function api(baseURL="/api", token?:string){
-    return initAxios(apiConfig(baseURL), token);
+export default function api(baseURL: string = process.env.VUE_APP_BASE_URL || "/api", token?: string) {
+    return initAxios(apiConfig({ baseURL }), token);
 }

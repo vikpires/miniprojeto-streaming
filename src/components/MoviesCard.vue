@@ -51,20 +51,20 @@ export default defineComponent({
 
     },
     methods: {
-        navigateToDetail() {
+        navigateToDetail(): void {
             this.$router.push({ path: `/movies/${this.movie.id}` });
         },
-        onNotFoundImageLoad(){
+        onNotFoundImageLoad(): void{
             this.isNotFoundImageLoaded = true;
         },
-        handleButtonClick(){
+        handleButtonClick(): void{
             this.isClicked = true;
             this.removeFavorite();
             setTimeout(() =>{
                 this.isClicked = false;
             }, 300)
         },
-        removeFavorite(){
+        removeFavorite(): void{
             if(this.movie.id){
                 this.saveFavorites.removeFavorite(this.movie.id);
                 this.$emit('favorite-removed', this.movie.id);
