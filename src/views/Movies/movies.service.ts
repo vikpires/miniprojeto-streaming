@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { MoviesRest } from "@/service/rest/movies.rest";
 import { Subject, Observable, take } from "rxjs";
-
 
 export class MovieService {
 
@@ -26,11 +22,11 @@ export class MovieService {
         });
     }
 
-    getMoviesById(id: string) {
+    getMoviesById(id: string): void {
         this._movie.getMoviesById(id).pipe(take(1)).subscribe({
             next: (response) => {
-                this.movie$.next(response)
+                this.movie$.next(response);
             }
-        })
+        });
     }
 }

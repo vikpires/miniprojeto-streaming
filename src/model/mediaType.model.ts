@@ -5,5 +5,5 @@ export class MediaType {
     constructor(
         public movies: MoviesModel[] = [],
         public series: SeriesModel[] = []
-    ) {}
+    ) { }
 }

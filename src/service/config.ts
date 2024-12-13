@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import { ToastsMessages } from "@/utils/toast.utils";
+import { ToastMessages } from "@/utils/toast.utils";
 import { ToastMessageOptions } from "primevue/toast";
 import app from "../main";
 
@@ -27,7 +27,7 @@ function initAxios(config: AxiosRequestConfig, token?: string): AxiosInstance {
         },
         (error) => {
             if (app?.config?.globalProperties?.$toast) {
-                app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions);
+                app.config.globalProperties.$toast.add(ToastMessages.showErrorToast() as ToastMessageOptions);
             }
             return Promise.reject(error);
         }
@@ -38,7 +38,7 @@ function initAxios(config: AxiosRequestConfig, token?: string): AxiosInstance {
         (response) => response,
         (error: AxiosError) => {
             if (app?.config?.globalProperties?.$toast) {
-                app.config.globalProperties.$toast.add(ToastsMessages.showErrorToast() as ToastMessageOptions);
+                app.config.globalProperties.$toast.add(ToastMessages.showErrorToast() as ToastMessageOptions);
             }
             return Promise.reject(error);
         }

@@ -1,12 +1,12 @@
 <template>
   <nav class="fixed top-0 w-full z-50">
     <tool-bar
-      class="bg-gray-800 text-white grid grid-cols-[1.5fr,2fr,1fr] lg:grid-cols-[1fr,2fr,1fr] items-center justify-between p-4 shadow-lg rounded-none">
+      class="bg-gray-800 text-white sm:flex md:grid md:grid-cols-[1.5fr,2fr,1fr] lg:grid-cols-[1fr,2fr,1fr] items-center justify-between p-4 shadow-lg rounded-none">
       <template #start>
         <p class="flex items-center">
           <span 
           @click="navigateTo('/')" 
-          class="ml-3 md:ml-5 text-2xl font-bold cursor-pointer md:text-3xl"
+          class="ml-3 md:ml-5 text-2xl font-bold cursor-pointer md:text-3xl font-roboto"
           title="Logo ViBi Flix" 
           alt="Logo ViBi Flix">
             ViBi Flix
@@ -14,11 +14,11 @@
         </p>
       </template>
       <template #center>
-        <span class="hidden md:flex flex-grow justify-center items-center space-x-8 lg:space-x-20">
+        <span class="hidden md:flex md:flex-grow justify-center items-center md:space-x-8 lg:space-x-20 font-roboto">
           <template v-for="route in mainRoutes" :key="route.path">
             <button-on 
-              :class="{ 'font-bold': isActive(route.path) }"
-              class="p-2 text-sm transition duration-300 transform hover:-translate-y-1 hover:bg-gray-700"
+              :class="{ 'font-bold border-b-2 border-gray-200': isActive(route.path) }"
+              class="p-2 text-sm transition duration-300 transform hover:-translate-y-1 hover:bg-gray-700 active:scale-90"
               :title="route.label" 
               :label="route.label" 
               :icon="route.icon" 
@@ -29,7 +29,7 @@
       </template>
       <template #end>
         <section class="flex justify-end flex-grow items-center">
-        <span class="hidden md:flex">
+        <span class="hidden md:flex active:scale-90">
           <button-on 
             @click="isAboutVisible = true" 
             icon="pi pi-info-circle"
@@ -48,17 +48,17 @@
     </tool-bar>
 
     <section v-if="isSidebarVisible"
-      class="fixed top-0 right-0 z-50 flex flex-col bg-gray-800 text-white w-44 max-h-screen overflow-y-auto p-5">
-      <span class="flex justify-end">
+      class="fixed top-6 right-0 z-50 flex flex-col bg-gray-800 text-white w-44 max-h-screen overflow-y-auto">
+      <span class="flex justify-end pr-3">
         <button @click="toggleSideBar" class="focus:outline-none">
           <i class="pi pi-times"></i>
         </button>
       </span>
-      <section class="space-y-4 mt-8">
+      <section class="space-y-4 mt-8 ml-4">
         <template v-for="route in mainRoutes" :key="route.path">
           <button-on 
             :class="{ 'font-bold': isActive(route.path) }"
-            class="p-2 text-sm transition duration-300 transform hover:bg-gray-700 cursor-pointer flex items-center space-x-2"
+            class="p-2 text-sm transition duration-300 transform hover:bg-gray-700 cursor-pointer flex items-center space-x-2 active:scale-90 font-roboto"
             :title="route.label" 
             :label="route.label" 
             :icon="route.icon" 
@@ -71,7 +71,7 @@
             @click="isAboutVisible = true, isSidebarVisible = false" 
             icon="pi pi-info-circle"
             title="Sobre"
-            class="mt-4 p-2 text-sm transition duration-300 transform hover:bg-gray-700 cursor-pointer flex items-center space-x-2"
+            class="my-4 p-2 text-sm transition duration-300 transform hover:bg-gray-700 cursor-pointer flex items-center space-x-2 active:scale-90 font-roboto"
             severity="warn" 
           />
         </span>
@@ -98,8 +98,8 @@ export default defineComponent({
       isAboutVisible: false as boolean,
       mainRoutes: [
         { label: "Home", path: "/", icon: "pi pi-home" } as Route,
-        { label: "Séries", path: "/series", icon: "pi pi-list" } as Route,
         { label: "Filmes", path: "/movies", icon: "pi pi-video" } as Route,
+        { label: "Séries", path: "/series", icon: "pi pi-list" } as Route,
         { label: "Favoritos", path: "/favs", icon: "pi pi-star" } as Route
       ]
     };
@@ -112,8 +112,8 @@ export default defineComponent({
     toggleSideBar(): void {
       this.isSidebarVisible = !this.isSidebarVisible;
     },
-    isActive(path: string): void {
-      this.$route.path === path;
+    isActive(route: string): boolean{
+      return this.$route.path === route;
     },
   }
 });
