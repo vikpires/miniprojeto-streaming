@@ -1,31 +1,29 @@
 import Button from "primevue/button";
-import InputText from "primevue/inputtext";
-import Toast from "primevue/toast";
 import Card from "primevue/card";
-import Toolbar from "primevue/toolbar";
-import Menu from "primevue/menu";
-import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import Sidebar from "primevue/sidebar";
+import DataTable from "primevue/datatable";
+import Dialog from "primevue/dialog";
+import InputText from "primevue/inputtext";
+import Menu from "primevue/menu";
 import Paginator from "primevue/paginator";
 import ProgressSpinner from "primevue/progressspinner";
+import Sidebar from "primevue/sidebar";
+import Toast from "primevue/toast";
+import Toolbar from "primevue/toolbar";
 
-//import useToast from "primevue/usetoast" const toast = useToast()
+import { App } from "vue";
 
-
-import {App} from "vue";
-
-export function setPrimeVueComponents(app:App){
-    app.component('paginator-on', Paginator)
-    app.component('button-on', Button)
-    app.component('input-text', InputText)
-    app.component('toast-on', Toast)
-    app.component('card-on', Card)
-    app.component('tool-bar', Toolbar)
-    app.component('menu-on', Menu)
-    app.component('data-table',DataTable)
-    app.component('column-app', Column)
-    app.component('side-bar', Sidebar)
-    app.component('progress-spinner', ProgressSpinner)
-
+export function setPrimeVueComponents(app: App) {
+    app.component('button-on', Button);
+    app.component('card-on', Card);
+    app.component('column-app', Column);
+    app.component('data-table', DataTable);
+    app.component('dialog-on', Dialog);
+    app.component('input-text', InputText);
+    app.component('menu-on', Menu);
+    app.component('paginator-on', Paginator);
+    app.component('progress-spinner', ProgressSpinner);
+    app.component('side-bar', Sidebar);
+    app.component('toast-on', Toast);
+    app.component('tool-bar', Toolbar);
 }
