@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-gray-900 min-h-screen">
-    <nav-bar />
-    <div class="content pt-16">
+  <main class="bg-gray-900 min-h-screen flex flex-col">
+    <navbar />
+    <section class="content pt-16">
       <router-view />
-      <toast-on/>
-    </div>
-  </div>
+      <toast-on />
+    </section>
+  </main>
 </template>
 
 <script lang="ts">
