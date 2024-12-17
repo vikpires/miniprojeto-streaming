@@ -1,11 +1,11 @@
 <template>
     <section class="flex justify-center">
-        <dialog-on :visible="visible" @update:visible="closeDialog" modal
-            class="w-[20rem] md:w-[30rem] lg:w-[40rem] ">
+        <dialog-on :visible="visible" @update:visible="closeDialog" modal 
+            class="w-[20rem] md:w-[30rem] lg:w-[40rem]">
             <template #header>
                 <span class="text-2xl font-semibold">Sobre</span>
             </template>
-            <article class="block">
+            <article class="block font-roboto">
                 <p>
                     Olá! Seja bem-vindo ao <strong>ViBi Flix</strong>!
                 </p>
@@ -24,10 +24,10 @@
                 <br />        
                 <p>
                     <cite>Projeto desenvolvido por
-                        <a href="https://github.com/thebiatriz" class="hover:text-blue-500 underline" target="_blank"
-                            rel="noopener noreferrer">Beatriz</a> e
-                        <a href="https://github.com/vikpires" class="hover:text-blue-500 underline" target="_blank"
-                            rel="noopener noreferrer">Vitor</a>.
+                        <a href="https://github.com/thebiatriz" class="hover:text-blue-500 underline" 
+                        target="_blank" rel="noopener noreferrer">Beatriz</a> e                            
+                        <a href="https://github.com/vikpires" class="hover:text-blue-500 underline" 
+                        target="_blank" rel="noopener noreferrer">Vitor</a>.
                     </cite>
                 </p>
             </article>

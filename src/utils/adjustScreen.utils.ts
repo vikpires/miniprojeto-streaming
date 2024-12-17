@@ -1,6 +1,6 @@
 export class AdjustScreen {
 
-    static getWindowScroll() {
+    public static getWindowScroll():void {
         return window.scroll({
             top: 0,
             left: 0,

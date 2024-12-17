@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Observable } from "rxjs";
 import api from "../rxjs";
 

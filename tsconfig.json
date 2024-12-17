@@ -16,15 +16,10 @@
       "webpack-env"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
+      "esnext", "dom", "dom.iterable", "scripthost"
     ]
   },
   "include": [
@@ -32,10 +27,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", 
-    "shims-vue.d.ts",
-],
-  "exclude": [
-    "node_modules"
-  ]
+    "tests/**/*.tsx",
+    "shims-vue.d.ts"
+  ],
+  "exclude": ["node_modules"]
 }

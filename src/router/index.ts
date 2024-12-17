@@ -1,47 +1,42 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '@/views/Home/HomeView.vue'
-import FavoriteView from '@/views/Favorite/FavoriteView.vue'
-import MoviesView from '@/views/Movies/MoviesView.vue'
-import SeriesView from '@/views/Series/SeriesView.vue'
-import SeriesDetailView from '@/views/Series/SeriesDetailView.vue'
-import MoviesDetailView from '@/views/Movies/MoviesDetailView.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { Views } from '@/views';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/favs',
-    name: 'favs',
-    component: FavoriteView
+    component: Views.Home
   },
   {
     path: '/movies',
     name: 'movie',
-    component: MoviesView
-  },
-  {
-    path: '/series',
-    name: 'series',
-    component: SeriesView
-  },
-  {
-    path: '/series/:id',
-    name: 'series-details',
-    component: SeriesDetailView
+    component: Views.Movies
   },
   {
     path: '/movies/:id',
     name: 'movie-details',
-    component: MoviesDetailView
+    component: Views.MoviesDetail
+  },
+  {
+    path: '/series',
+    name: 'series',
+    component: Views.Series
+  },
+  {
+    path: '/series/:id',
+    name: 'series-details',
+    component: Views.SeriesDetail
+  },
+  {
+    path: '/favs',
+    name: 'favs',
+    component: Views.Favorites
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
-export default router
+export default router;

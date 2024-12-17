@@ -1,7 +1,7 @@
 <template>
-  <main class="bg-gray-900 min-h-screen flex flex-col">
+  <main class="bg-gray-900 min-h-screen flex flex-col space-y-16 font-roboto">
     <navbar />
-    <section class="content pt-16">
+    <section>
       <router-view />
       <toast-on />
     </section>
