@@ -1,6 +1,19 @@
 <template>
     <section class="relative flex items-center justify-center p-0 md:p-5 group">
-        <card-on @click="navigateToDetail"
+        <section v-if="!isPosterLoaded && !isNotFoundImageLoaded" 
+        :class="{'hidden': isPosterLoaded}"
+        class="relative w-full rounded-xl aspect-[2/3]">
+            <skeleton-on 
+                shape="rectangle" 
+                width="100%" 
+                height="100%" 
+                borderRadius="12px" 
+                class="bg-gray-700/25"
+            />
+        </section>
+
+        <card-on 
+            @click="navigateToDetail" 
             class="relative rounded-xl hover:opacity-50 hover:bg-[#8888a0] hover:p-2 ease-in-out duration-300 md:cursor-pointer h-full"
             unstyled>
             <template #header>
@@ -8,32 +21,34 @@
                     icon="pi pi-times" 
                     aria-label="Fechar" 
                     :class="[
-                        'absolute -top-2 -right-2 p-button-text p-button-rounded text-white bg-red-600 transition-all duration-300 scale-75 hover:bg-red-900 hover:p-4 ease-in-out border-2 border-white',
+                        'absolute -top-2 -right-2 p-button-text p-button-rounded text-white bg-red-600 transition-all duration-300 scale-75 hover:bg-red-900 hover:p-4 ease-in-out border-2 border-white z-10',
                         isClicked ? 'scale-125' : 'scale-90',
                         'sm:opacity-100 lg:opacity-0 group-hover:opacity-100'
                     ]" 
-                    @click.stop="handleButtonClick" 
+                    @click.stop.prevent="handleButtonClick" 
                 />
             </template>
             <template #content>
-                <figure v-if="movie.poster_path">
-                    <img 
-                        :src="posterImage" 
-                        :alt="movie.original_title" 
-                        :title="movie.original_title"
-                        class="rounded-xl object-cover" 
-                        @load="onPosterLoad" 
-                    />
-                </figure>
-                <figure v-else :class="{ 'hidden': !isNotFoundImageLoaded }">
-                    <img 
-                        :src="notFoundImage" 
-                        alt="Imagem não encontrada" 
-                        title="Imagem não encontrada"
-                        @load="onNotFoundImageLoad" 
-                        class="rounded-xl object-cover" 
-                    />
-                </figure>
+                <section>
+                    <figure v-if="movie.poster_path">
+                        <img 
+                            :src="posterImage" 
+                            :alt="movie.original_title" 
+                            :title="movie.original_title"
+                            class="relative w-full h-full rounded-xl" 
+                            @load="handlePosterLoad"
+                        />
+                    </figure>
+                    <figure v-else :class="{ 'hidden': !isNotFoundImageLoaded }">
+                        <img 
+                            :src="notFoundImage" 
+                            alt="Imagem não encontrada" 
+                            title="Imagem não encontrada"
+                            class="relative w-full h-full rounded-xl" 
+                            @load="onNotFoundImageLoad" 
+                        />
+                    </figure>
+                </section>
             </template>
             <template #footer>
                 <section
@@ -57,10 +72,10 @@ export default defineComponent({
     data() {
         return {
             notFoundImage: require('@/assets/images/not_found.png') as string,
-            isNotFoundImageLoaded: false as boolean,
             saveFavorites: new SaveFavorites(),
             isClicked: false as boolean,
             isPosterLoaded: false as boolean,
+            isNotFoundImageLoaded: false as boolean,
         };
     },
     props: {
@@ -81,14 +96,10 @@ export default defineComponent({
     methods: {
         navigateToDetail(): void {
             if (this.movie.id) {
-                this.$router.push({ path: `/movies/${this.movie.id}` });
-            };
-        },
-        onNotFoundImageLoad(): void {
-            this.isNotFoundImageLoaded = true;
-        },
-        onPosterLoad(): void {
-            this.isPosterLoaded = true;
+                this.$router.push({ 
+                    path: `/movies/${this.movie.id}` 
+                });
+            }
         },
         handleButtonClick(): void {
             this.isClicked = true;
@@ -97,8 +108,14 @@ export default defineComponent({
                 this.isClicked = false;
             }, 300);
         },
+        onNotFoundImageLoad(): void {
+            this.isNotFoundImageLoaded = true;
+        },
+        handlePosterLoad(): void {
+            this.isPosterLoaded = true;
+        },
         clearFavorite(): void {
-            if (this.movie.id) {
+            if (this.movie?.id) {
                 this.saveFavorites.clearFavorites(this.movie.id);
                 this.$emit('favorite-removed', this.movie.id);
             }

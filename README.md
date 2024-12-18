@@ -5,7 +5,7 @@
         src="./src/assets/images/vibi_flix_screenshot.png" 
         alt="Visual interface of ViBi Flix streaming platform" 
         title="Screenshot of the ViBi Flix streaming platform's visual interface" 
-        width="full"
+        width="100%"
     /> 
 </div>
 <div align="center">
@@ -129,6 +129,8 @@
 </div>
 <br />
 <br />
+
+You can explore the ViBi Flix streaming platform [here](https://vibi-flix.onrender.com/).
 
 ## Developers
 

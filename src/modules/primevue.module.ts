@@ -8,6 +8,7 @@ import Menu from "primevue/menu";
 import Paginator from "primevue/paginator";
 import ProgressSpinner from "primevue/progressspinner";
 import Sidebar from "primevue/sidebar";
+import Skeleton from "primevue/skeleton";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
 
@@ -24,6 +25,7 @@ export function setPrimeVueComponents(app: App) {
     app.component('paginator-on', Paginator);
     app.component('progress-spinner', ProgressSpinner);
     app.component('side-bar', Sidebar);
+    app.component('skeleton-on', Skeleton);
     app.component('toast-on', Toast);
     app.component('tool-bar', Toolbar);
 }
