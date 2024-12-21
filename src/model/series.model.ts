@@ -1,6 +1,6 @@
 export class SeriesModel {
     constructor(
-        public adult?: boolean,
+        public adult?: false,
         public backdrop_path?: string,
         public genre_ids?: number[],
         public id?: number,
@@ -15,6 +15,7 @@ export class SeriesModel {
         public vote_average?: number,
         public vote_acount?: number,
         public number_of_seasons?: number,
+        public media_type?: string,
         public videos?: {
             results: Array<{
                 id: string;

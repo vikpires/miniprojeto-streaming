@@ -3,8 +3,13 @@ import api from "../rxjs";
 
 export class HomeRest {
 
-    getAllMedia(page: number = 1): Observable<any> {
-        const url = `/trending/all/day?page=${page}`;
+    getPopularMovies(page: number = 1): Observable<any> {
+        const url = `/movie/popular?page=${page}`;
+        return api.get(url);
+    }
+
+    getPopularSeries(page: number = 1): Observable<any> {
+        const url = `/tv/popular?page=${page}`;
         return api.get(url);
     }
 }
