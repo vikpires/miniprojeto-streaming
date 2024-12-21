@@ -39,7 +39,7 @@ export default defineComponent({
     getAllMedia(page = 1): void {
       this.HomeService.allMedia.subscribe({
         next: (response) => {
-          this.homeList = response.results;
+          this.homeList = [...response.results];
           this.isLoading = false;
           this.totalResults = this.totalResultsResponse(response.total_results);
           this.totalPages = this.totalPagesResponse(response.total_pages);
