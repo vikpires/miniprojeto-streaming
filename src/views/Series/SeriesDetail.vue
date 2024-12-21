@@ -13,20 +13,47 @@
                 <img :src="backgroundImage" :alt="series.original_name"
                     class="absolute top-0 w-full h-full object-cover filter brightness-50" />
             </figure>
-            <section
-                class="bg-opacity-80 flex top-24 md:top-64 xl:top-52 z-30 relative items-center p-10 flex-col lg:flex-row-reverse gap-8 md:flex md:gap-12 lg:gap-0 justify-center lg:justify-between">
-                <section v-if="urlTrailer" class="lg:w-1/4 lg:mr-20 md:w-3/5 flex justify-center items-center">
-                    <iframe :src="urlTrailer" :title="`Trailer da série ${series.original_name}`"
-                        allow="fullscreen" no-referrer class="h-56 md:w-full md:h-72 lg:h-80 border-none">
+            <section class="bg-opacity-80 flex top-16 md:top-32 z-30 relative items-center p-8 flex-col lg:flex-row-reverse 
+            gap-8 md:flex md:gap-12 lg:gap-0 justify-center lg:justify-between">
+                <section class="grid grid-cols-2 gap-x-12 w-full items-center justify-center md:hidden">
+                    <span class="items-center">
+                        <button-on 
+                            @click="navigateBack" 
+                            label="Voltar" 
+                            icon="pi pi-arrow-left"
+                            class="rounded-lg font-bold py-[10px] justify-center text-white text-sm active:scale-90 px-4 hover:bg-gray-700" />
+                    </span>
+                    <span class="items-center">
+                        <button-on 
+                            @click="toggleFavorite" 
+                            :label="favoriteLabel" 
+                            :icon="favoriteIcon" 
+                            :class="{
+                                'rounded-lg font-bold py-2 justify-center border-2 active:scale-90': true,
+                                'border-white text-sm px-5 text-white': !isFavorite,
+                                'bg-white text-sm px-4 text-black': isFavorite
+                            }" 
+                        />
+                    </span>
+                </section>
+                <section v-if="urlTrailer" class="lg:w-1/4 lg:mr-20 md:w-2/3 flex justify-center items-center">
+                    <iframe 
+                    :src="urlTrailer" :title="`Trailer da série ${series.original_name}`" allow="fullscreen"
+                        no-referrer class="h-56 md:w-full md:h-72 lg:h-80 border-none">
                     </iframe>
                 </section>
                 <figure v-else :class="{ 'hidden': !isNotFoundVideoLoaded }"
                     class="flex justify-center items-center w-full lg:w-1/4 lg:mr-20 md:w-3/5">
-                    <img :src="backgroundImage" alt="Imagem para vídeo não encontrado" title="Vídeo não encontrado"
+                    <img 
+                        :src="backgroundImage" 
+                        alt="Imagem para vídeo não encontrado" 
+                        title="Vídeo não encontrado"
                         @load="onNotFoundVideoLoad"
-                        class="rounded-xl w-48 h-48 md:h-72 object-cover opacity-75 md:w-96" />
+                        class="rounded-xl w-48 h-48 md:h-72 object-cover opacity-75 md:w-96" 
+                    />
                 </figure>
-                <card-on class="w-full sm:w-5/6 md:w-4/6 lg:w-2/5 p-4 rounded-xl shadow-lg bg-black bg-opacity-50 font-roboto">
+                <card-on
+                    class="w-full sm:w-5/6 md:w-4/6 lg:w-2/5 p-4 rounded-xl shadow-lg bg-black bg-opacity-50 font-roboto">
                     <template #title>
                         <h3 v-if="series.name" class="text-2xl text-white font-bold tracking-wider mb-1">
                             {{ series.name }}
@@ -39,29 +66,33 @@
                             </p>
                             <p> | </p>
                             <p v-if="series.vote_average"
-                                :class="{ 'text-green-400': series.vote_average > 6.00, 'text-red-500': series.vote_average <= 6.00 }"
+                                :class="{ 'text-green-400': series.vote_average >= 6.00, 'text-red-500': series.vote_average < 6.00 }"
                                 class="brightness-125">
                                 {{ series.vote_average?.toFixed(2) }}
-                            </p> | <p>
+                            </p> 
+                            <p v-else>?</p> | 
+                            <p v-if="series.number_of_seasons">
                                 {{ series.number_of_seasons }} Season(s)
                             </p>
+                            <p v-else>? Season(s)</p>
                         </span>
                         <span class="text-white mb-1">
-                            <p v-if="series.overview" class="max-h-40 overflow-y-auto text-left">
+                            <p v-if="series.overview" class="max-h-40 overflow-y-auto text-left sm:text-sm text-base">
                                 {{ series.overview }}
                             </p>
                             <p v-else class="items-center">No overview.</p>
                         </span>
                     </template>
                     <template #footer>
-                        <section class="grid grid-cols-2 gap-2 w-full justify-center md:justify-between md:gap-8 md:grid md:grid-cols-3 items-center">
+                        <section
+                            class="justify-between md:gap-8 md:grid md:grid-cols-3 items-center hidden">
                             <span class="items-center">
                                 <button-on 
                                     @click="navigateBack" 
                                     label="Voltar" 
                                     icon="pi pi-arrow-left"
-                                    class="rounded-lg font-bold py-[10px] justify-center text-white text-sm md:text-base active:scale-90 px-4 md:px-8 hover:bg-gray-700" 
-                                />                                
+                                    class="rounded-lg font-bold py-[10px] justify-center text-white text-base active:scale-90 px-8 hover:bg-gray-700" 
+                                />
                             </span>
                             <span class="items-center">
                                 <button-on 
@@ -69,12 +100,12 @@
                                     :label="favoriteLabel" 
                                     :icon="favoriteIcon" 
                                     :class="{
-                                        'rounded-lg font-bold py-2 px-4 md:px-8 justify-center border-2 active:scale-90 hover:bg-white hover:text-black': true,
-                                        'border-white text-sm md:text-base text-white': !isFavorite,
-                                        'bg-white text-sm md:text-base px-3 md:px-7 text-black': isFavorite
+                                        'rounded-lg font-bold py-2 px-8 justify-center border-2 active:scale-90 hover:bg-white hover:text-black': true,
+                                        'border-white text-base text-white': !isFavorite,
+                                        'bg-white text-base px-7 text-black': isFavorite
                                     }" 
                                 />
-                            </span>  
+                            </span>
                         </section>
                     </template>
                 </card-on>
